@@ -1,0 +1,48 @@
+# Miniflux: a minimalist feed reader (Go, one static binary, PostgreSQL).
+# Configuration is environment-only: https://miniflux.app/docs/configuration.html
+schema = 1
+
+[app]
+id = "miniflux"
+name = "Miniflux"
+version = "2.3.3"
+homepage = "https://miniflux.app"
+health = "/healthcheck"
+admin_path = "/"
+startup_grace_s = 60
+
+[run]
+kind = "binary"
+args = []
+
+# Miniflux publishes a bare executable per platform, not an archive.
+[run.binary."x86_64-linux"]
+url = "https://github.com/miniflux/v2/releases/download/2.3.3/miniflux-linux-amd64"
+sha256 = "237bf0aed05e86c235b6bcfbad843bfc7bcdd6a628ece672eae3d1e013ddd244"
+format = "binary"
+exec = "miniflux"
+
+# Everything (feeds, entries, users, icons) lives in PostgreSQL.
+[needs]
+postgres = ">=13"
+
+[env]
+LISTEN_ADDR    = { from = "bind_addr" }
+DATABASE_URL   = { from = "postgres_url" }
+BASE_URL       = { from = "site_url" }
+RUN_MIGRATIONS = { value = "1" }
+CREATE_ADMIN   = { value = "1" }
+ADMIN_USERNAME = { value = "admin" }
+# First-boot admin password; reveal it in the site's Env tab.
+ADMIN_PASSWORD = { generate = "password20", secret = true, once = true }
+
+[limits.default]
+memory_mb = 256
+cpu_percent = 100
+disk_mb = 1024
+
+[backup]
+postgres = true
+
+[update]
+strategy = "replace"

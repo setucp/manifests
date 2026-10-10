@@ -1,0 +1,48 @@
+# hello-axum: Setu's small Rust (Axum + sqlx) sample app, the same code
+# as apps/hello in github.com/setucp/setu, built static for musl.
+schema = 1
+
+[app]
+id = "hello-axum"
+name = "Hello (Axum)"
+version = "0.1.0"
+homepage = "https://github.com/setucp/manifests/tree/main/hello-axum"
+health = "/healthz"
+admin_path = "/"
+startup_grace_s = 30
+
+[run]
+kind = "binary"
+workdir = "exec_dir"
+args = []
+
+# A tar.gz with one top-level folder holding the executable.
+[run.binary."x86_64-linux"]
+url = "https://github.com/setucp/manifests/releases/download/hello-axum-0.1.0/hello-axum-0.1.0-x86_64-unknown-linux-musl.tar.gz"
+sha256 = "e0b0804d961913ced748540f66bb67295908398e8900e546317b8809028c1ec5"
+format = "tar.gz"
+exec = "hello-axum-0.1.0-x86_64-unknown-linux-musl/hello"
+
+[needs]
+postgres = ">=16"
+dirs = ["uploads", "state"]
+
+[env]
+HELLO_BIND        = { from = "bind_addr" }
+DATABASE_URL      = { from = "postgres_url" }
+HELLO_UPLOADS_DIR = { from = "dir", dir = "uploads" }
+HELLO_STATE_DIR   = { from = "dir", dir = "state" }
+HELLO_NAME        = { value = "hello-axum" }
+HELLO_VERSION     = { value = "0.1.0" }
+
+[limits.default]
+memory_mb = 128
+cpu_percent = 50
+disk_mb = 512
+
+[backup]
+postgres = true
+dirs = ["uploads"]
+
+[update]
+strategy = "replace"
