@@ -36,6 +36,7 @@ Then create a site from it (**Sites → New**).
 |---|---|---|
 | [`miniflux/`](miniflux/manifest.toml) | [Miniflux](https://miniflux.app) feed reader (Go, PostgreSQL) | bare executable (`format = "binary"`) |
 | [`hello-axum/`](hello-axum/) | Setu's Rust sample app (Axum + sqlx) | `tar.gz` archive |
+| [`vyasa/`](vyasa/manifest.toml) | [Vyasa](https://github.com/vyasa-cms/vyasa) CMS (Rust, PostgreSQL) | `tar.gz` archive |
 
 ## Adding a manifest
 

@@ -1,0 +1,49 @@
+# Vyasa: a Rust CMS (one binary, PostgreSQL, admin at /admin).
+# https://github.com/vyasa-cms/vyasa
+schema = 1
+
+[app]
+id = "vyasa"
+name = "Vyasa"
+version = "0.2.0"
+homepage = "https://github.com/vyasa-cms/vyasa"
+health = "/readyz"
+admin_path = "/admin"
+startup_grace_s = 90
+
+[run]
+kind = "binary"
+workdir = "exec_dir"
+args = ["serve"]
+[run.binary."x86_64-linux"]
+url = "https://github.com/vyasa-cms/vyasa/releases/download/v0.2.0/vyasa-0.2.0-x86_64-unknown-linux-gnu.tar.gz"
+sha256 = "84b5a99beccace445037191ff2bb168e8b0287a3f52d460191a9ce745220debc"
+exec = "vyasa-0.2.0-x86_64-unknown-linux-gnu/vyasa"
+
+[needs]
+postgres = ">=16"
+dirs = ["media", "index", "registry"]
+
+[env]
+VYASA_BIND_ADDR      = { from = "bind_addr" }
+VYASA_DATABASE_URL   = { from = "postgres_url" }
+VYASA_SECRET_KEY     = { generate = "hex32", secret = true }
+VYASA_MEDIA_DIR      = { from = "dir", dir = "media" }
+VYASA_INDEX_DIR      = { from = "dir", dir = "index" }
+VYASA_REGISTRY_DIR   = { from = "dir", dir = "registry" }
+VYASA_RUN_DIR        = { from = "run_dir" }
+VYASA_TRUSTED_PROXIES = { value = "127.0.0.1" }
+VYASA_ADMIN_EMAIL    = { from = "owner_email" }
+VYASA_ADMIN_PASSWORD = { generate = "password20", secret = true, once = true }
+
+[limits.default]
+memory_mb = 512
+cpu_percent = 100
+disk_mb = 5120
+
+[backup]
+postgres = true
+dirs = ["media", "registry"]
+
+[update]
+strategy = "replace"
