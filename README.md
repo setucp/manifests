@@ -53,3 +53,11 @@ Then create a site from it (**Sites → New**).
 
 Release URLs are pinned per version; a new upstream version is a new
 manifest version (bump `app.version`, `url` and `sha256` together).
+
+## Vyasa releases
+
+`.github/workflows/vyasa-release.yml` checks for a new Vyasa release every
+six hours and opens a pull request moving `vyasa/manifest.toml` to it
+(`tools/bump-vyasa.py`, which computes each archive's sha256 itself). Merge
+it, then add the manifest URL in the panel (**Apps → Add**) to offer the
+update to sites.
