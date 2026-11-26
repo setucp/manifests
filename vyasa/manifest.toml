@@ -5,7 +5,7 @@ schema = 1
 [app]
 id = "vyasa"
 name = "Vyasa"
-version = "0.4.4"
+version = "0.4.5"
 homepage = "https://github.com/vyasa-cms/vyasa"
 health = "/readyz"
 admin_path = "/admin"
@@ -16,13 +16,13 @@ kind = "binary"
 workdir = "exec_dir"
 args = ["serve"]
 [run.binary."x86_64-linux"]
-url = "https://github.com/vyasa-cms/vyasa/releases/download/v0.4.4/vyasa-0.4.4-x86_64-unknown-linux-gnu.tar.gz"
-sha256 = "90354937af74e901a0b59bba5b4dbc2139f57dae58fd669128c255647fcdf2b0"
-exec = "vyasa-0.4.4-x86_64-unknown-linux-gnu/vyasa"
+url = "https://github.com/vyasa-cms/vyasa/releases/download/v0.4.5/vyasa-0.4.5-x86_64-unknown-linux-gnu.tar.gz"
+sha256 = "2f301a93139c96b269fb86f0a6247060e42b4a99137ec32ef51997e0170081dd"
+exec = "vyasa-0.4.5-x86_64-unknown-linux-gnu/vyasa"
 [run.binary."aarch64-linux"]
-url = "https://github.com/vyasa-cms/vyasa/releases/download/v0.4.4/vyasa-0.4.4-aarch64-unknown-linux-gnu.tar.gz"
-sha256 = "d3eb037f87e3b5c216428d539827de9a14e244675d960ea5b126610bdaa4e731"
-exec = "vyasa-0.4.4-aarch64-unknown-linux-gnu/vyasa"
+url = "https://github.com/vyasa-cms/vyasa/releases/download/v0.4.5/vyasa-0.4.5-aarch64-unknown-linux-gnu.tar.gz"
+sha256 = "8ff1da387ebe0610a04015bf0edfdb88e7e7c76b28254fa97f5a9d0d478da0d5"
+exec = "vyasa-0.4.5-aarch64-unknown-linux-gnu/vyasa"
 
 [needs]
 postgres = ">=16"
